@@ -1,4 +1,4 @@
-package io.realm.recyclerview.example.models;
+package com.thefinestartist.realm.instagram.models;
 
 import io.realm.RealmObject;
 

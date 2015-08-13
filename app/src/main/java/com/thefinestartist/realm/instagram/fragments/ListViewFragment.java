@@ -1,4 +1,4 @@
-package io.realm.recyclerview.example.fragments;
+package com.thefinestartist.realm.instagram.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,15 +11,16 @@ import android.widget.AbsListView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.thefinestartist.realm.instagram.R;
+import com.thefinestartist.realm.instagram.adapters.ListViewAdapter;
+import com.thefinestartist.realm.instagram.models.Post;
+import com.thefinestartist.realm.instagram.networks.Api;
+
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
-import io.realm.recyclerview.example.R;
-import io.realm.recyclerview.example.adapters.ListViewAdapter;
-import io.realm.recyclerview.example.models.Post;
-import io.realm.recyclerview.example.networks.Api;
 
 /**
  * Created by TheFinestArtist on 6/29/15.
@@ -41,7 +42,7 @@ public class ListViewFragment extends Fragment implements AbsListView.OnScrollLi
         View view = inflater.inflate(R.layout.fragment_listview, null);
         listView = (ListView) view.findViewById(android.R.id.list);
         swipeRefreshLayout = (SwipeRefreshLayout_) view.findViewById(R.id.swipeRefreshLayout);
-        swipeRefreshLayout.setColorSchemeResources(R.color.realm_red, R.color.realm_blue);
+        swipeRefreshLayout.setColorSchemeResources(R.color.accent, R.color.grey);
 
         RealmResults<Post> realmResults = realm.where(Post.class).findAll();
         adapter = new ListViewAdapter(getActivity(), realmResults);

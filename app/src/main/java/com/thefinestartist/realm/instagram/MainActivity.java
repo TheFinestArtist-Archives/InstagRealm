@@ -1,4 +1,4 @@
-package io.realm.recyclerview.example;
+package com.thefinestartist.realm.instagram;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -8,10 +8,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import io.realm.recyclerview.example.fragments.CardViewFragment;
-import io.realm.recyclerview.example.fragments.ListViewFragment;
-import io.realm.recyclerview.example.fragments.RecyclerViewFragment;
-import io.realm.recyclerview.example.fragments.ScrollViewFragment;
+import com.thefinestartist.realm.instagram.fragments.CardViewFragment;
+import com.thefinestartist.realm.instagram.fragments.ListViewFragment;
+import com.thefinestartist.realm.instagram.fragments.RecyclerViewFragment;
+import com.thefinestartist.realm.instagram.fragments.ScrollViewFragment;
 
 public class MainActivity extends AppCompatActivity  {
 
@@ -44,6 +44,21 @@ public class MainActivity extends AppCompatActivity  {
                     return new CardViewFragment();
             }
         }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "ScrollView";
+                case 1:
+                    return "ListView";
+                case 2:
+                    return "RecyclerView";
+                case 3:
+                default:
+                    return "CardView";
+            }
+        }
     }
 
     MainFragmentAdapter adapter;
@@ -63,10 +78,7 @@ public class MainActivity extends AppCompatActivity  {
         viewPager.setOffscreenPageLimit(ITEM_COUNT - 1);
 
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        tabLayout.addTab(tabLayout.newTab().setText("ScrollView"));
-        tabLayout.addTab(tabLayout.newTab().setText("ListView"));
-        tabLayout.addTab(tabLayout.newTab().setText("RecyclerView"));
-        tabLayout.addTab(tabLayout.newTab().setText("CardView"));
+        tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
     }
 

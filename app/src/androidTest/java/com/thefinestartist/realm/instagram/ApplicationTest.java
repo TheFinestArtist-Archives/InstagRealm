@@ -1,4 +1,4 @@
-package io.realm.recyclerview.example;
+package com.thefinestartist.realm.instagram;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

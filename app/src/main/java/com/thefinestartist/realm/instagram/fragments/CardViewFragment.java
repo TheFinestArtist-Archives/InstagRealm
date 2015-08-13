@@ -1,6 +1,6 @@
-package io.realm.recyclerview.example.fragments;
+package com.thefinestartist.realm.instagram.fragments;
 
-import io.realm.recyclerview.example.R;
+import com.thefinestartist.realm.instagram.R;
 
 /**
  * Created by TheFinestArtist on 6/30/15.

@@ -1,4 +1,4 @@
-package io.realm.recyclerview.example.fragments;
+package com.thefinestartist.realm.instagram.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,13 +12,14 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.thefinestartist.realm.instagram.R;
+import com.thefinestartist.realm.instagram.models.Post;
+import com.thefinestartist.realm.instagram.networks.Api;
+
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import io.realm.recyclerview.example.R;
-import io.realm.recyclerview.example.models.Post;
-import io.realm.recyclerview.example.networks.Api;
 
 /**
  * Created by TheFinestArtist on 6/29/15.
@@ -40,7 +41,7 @@ public class ScrollViewFragment extends Fragment implements ViewTreeObserver.OnS
         scrollView = (ScrollView) view.findViewById(R.id.scrollView);
         linearLayout = (LinearLayout) view.findViewById(R.id.linearLayout);
         swipeRefreshLayout = (SwipeRefreshLayout_) view.findViewById(R.id.swipeRefreshLayout);
-        swipeRefreshLayout.setColorSchemeResources(R.color.realm_red, R.color.realm_blue);
+        swipeRefreshLayout.setColorSchemeResources(R.color.accent, R.color.grey);
 
         swipeRefreshLayout.setOnRefreshListener(this);
         scrollView.getViewTreeObserver().addOnScrollChangedListener(this);

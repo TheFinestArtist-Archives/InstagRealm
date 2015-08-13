@@ -1,4 +1,4 @@
-package io.realm.recyclerview.example.fragments;
+package com.thefinestartist.realm.instagram.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,16 +13,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.thefinestartist.realm.instagram.R;
+import com.thefinestartist.realm.instagram.adapters.RecyclerViewAdapter;
+import com.thefinestartist.realm.instagram.models.Post;
+import com.thefinestartist.realm.instagram.networks.Api;
+
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
-import io.realm.recyclerview.example.R;
-import io.realm.recyclerview.example.adapters.RecyclerViewAdapter;
-import io.realm.recyclerview.example.models.Post;
-import io.realm.recyclerview.example.networks.Api;
 
 /**
  * Created by TheFinestArtist on 6/29/15.
@@ -63,7 +64,7 @@ public class RecyclerViewFragment extends Fragment implements SwipeRefreshLayout
         recyclerView.setItemAnimator(itemAnimator);
 
         swipeRefreshLayout = (SwipeRefreshLayout_) view.findViewById(R.id.swipeRefreshLayout);
-        swipeRefreshLayout.setColorSchemeResources(R.color.realm_red, R.color.realm_blue);
+        swipeRefreshLayout.setColorSchemeResources(R.color.accent, R.color.grey);
 
         RealmResults<Post> realmResults = realm.where(Post.class).findAll();
         adapter = new RecyclerViewAdapter(realmResults, layoutRes);

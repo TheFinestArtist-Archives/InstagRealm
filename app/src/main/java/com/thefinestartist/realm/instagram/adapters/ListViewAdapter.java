@@ -1,4 +1,4 @@
-package io.realm.recyclerview.example.adapters;
+package com.thefinestartist.realm.instagram.adapters;
 
 import android.content.Context;
 import android.view.View;
@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import io.realm.RealmBaseAdapter;
 import io.realm.RealmResults;
-import io.realm.recyclerview.example.models.Post;
+import com.thefinestartist.realm.instagram.models.Post;
 
 /**
  * Created by TheFinestArtist on 6/29/15.

@@ -1,4 +1,4 @@
-package io.realm.recyclerview.example.networks;
+package com.thefinestartist.realm.instagram.networks;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import io.realm.recyclerview.example.models.Post;
+import com.thefinestartist.realm.instagram.models.Post;
 
 /**
  * Created by TheFinestArtist on 6/29/15.
