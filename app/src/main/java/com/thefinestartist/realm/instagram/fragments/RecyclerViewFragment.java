@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout_;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,7 +27,7 @@ import io.realm.RealmResults;
 /**
  * Created by TheFinestArtist on 6/29/15.
  */
-public class RecyclerViewFragment extends Fragment implements SwipeRefreshLayout_.OnRefreshListener, RealmChangeListener {
+public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLayout_.OnRefreshListener, RealmChangeListener {
 
     String REALM_NAME;
     Realm realm;

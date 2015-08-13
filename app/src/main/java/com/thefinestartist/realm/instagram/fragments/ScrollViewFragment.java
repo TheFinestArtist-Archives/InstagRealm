@@ -24,7 +24,7 @@ import io.realm.RealmConfiguration;
 /**
  * Created by TheFinestArtist on 6/29/15.
  */
-public class ScrollViewFragment extends Fragment implements ViewTreeObserver.OnScrollChangedListener, SwipeRefreshLayout_.OnRefreshListener {
+public class ScrollViewFragment extends BaseFragment implements ViewTreeObserver.OnScrollChangedListener, SwipeRefreshLayout_.OnRefreshListener {
 
     Realm realm;
 

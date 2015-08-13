@@ -1,4 +1,15 @@
-# Realm Case Study with Instagram Tag API
+# InstagRealm
+Realm case study
+* Instagram tag API
+* Views
+   * ScrollView
+   * ListView
+   * RecyclerView
+   * CardView
+* Infinite Scroll
+* Retrofit
+* EventBus
+* Picasso
 
 ## Including Libraries
 * **[Realm](https://github.com/realm/realm-java)**  

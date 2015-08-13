@@ -2,7 +2,6 @@ package com.thefinestartist.realm.instagram.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout_;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +24,7 @@ import io.realm.RealmResults;
 /**
  * Created by TheFinestArtist on 6/29/15.
  */
-public class ListViewFragment extends Fragment implements AbsListView.OnScrollListener, SwipeRefreshLayout_.OnRefreshListener {
+public class ListViewFragment extends BaseFragment implements AbsListView.OnScrollListener, SwipeRefreshLayout_.OnRefreshListener {
 
     private static final String REALM_NAME = "ListView.realm";
     Realm realm;
