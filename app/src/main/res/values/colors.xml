@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="realm_red">#F0727D</color>
+    <color name="realm_red_darker">#DB5C67</color>
+    <color name="realm_blue">#428BCA</color>
+    <color name="realm_black">#333333</color>
+    <color name="realm_silver">#555555</color>
+    <color name="realm_white">#ffffff</color>
+</resources>

@@ -1,0 +1,12 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/realm_white</item>
+        <item name="colorPrimary">@color/realm_white</item>
+        <item name="colorPrimaryDark">@color/realm_white</item>
+        <item name="colorAccent">@color/realm_red</item>
+        <item name="android:textColorPrimary">@color/realm_black</item>
+        <item name="android:textColorSecondary">@color/realm_silver</item>
+        <item name="windowActionBar">false</item>
+    </style>
+</resources>
