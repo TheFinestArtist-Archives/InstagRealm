@@ -29,7 +29,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.thefinestartist.realm.instagram.R;
-import com.thefinestartist.realm.instagram.instagram.Access;
+import com.thefinestartist.realm.instagram.instagram.networks.InstagramAPI;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -85,7 +85,7 @@ public class InstagramAuthActivity extends AppCompatActivity {
             if (url.contains("#access_token=")) {
                 String[] splited = url.split("#access_token=");
                 if (splited.length == 2) {
-                    Access.Token = splited[1];
+                    InstagramAPI.accessToken = splited[1];
                     Intent intent = new Intent(InstagramAuthActivity.this, MainActivity.class);
                     startActivity(intent);
                 }

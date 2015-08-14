@@ -13,6 +13,7 @@ import com.thefinestartist.realm.instagram.fragments.CardViewFragment;
 import com.thefinestartist.realm.instagram.fragments.ListViewFragment;
 import com.thefinestartist.realm.instagram.fragments.RecyclerViewFragment;
 import com.thefinestartist.realm.instagram.fragments.ScrollViewFragment;
+import com.thefinestartist.realm.instagram.instagram.networks.InstagramAPI;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

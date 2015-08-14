@@ -19,7 +19,9 @@
             android:name=".activities.MainActivity"
             android:label="InstagRealm" />
 
-        <activity android:name=".activities.InstagramAuthActivity">
+        <activity
+            android:name=".activities.InstagramAuthActivity"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

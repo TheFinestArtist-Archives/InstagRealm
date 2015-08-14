@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.thefinestartist.realm.instagram.R;
 import com.thefinestartist.realm.instagram.instagram.networks.Api;
+import com.thefinestartist.realm.instagram.instagram.networks.InstagramAPI;
 import com.thefinestartist.realm.instagram.realm.Post;
 
 import java.util.List;
@@ -96,6 +97,8 @@ public class ScrollViewFragment extends BaseFragment implements ViewTreeObserver
 
         page = 0;
         loadMoreData();
+
+        InstagramAPI.getTag(null);
     }
 
     /**
