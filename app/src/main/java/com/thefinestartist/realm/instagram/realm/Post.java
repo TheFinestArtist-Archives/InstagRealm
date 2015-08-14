@@ -1,4 +1,4 @@
-package com.thefinestartist.realm.instagram.models;
+package com.thefinestartist.realm.instagram.realm;
 
 import io.realm.RealmObject;
 

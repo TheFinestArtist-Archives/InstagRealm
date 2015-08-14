@@ -2,7 +2,6 @@ package com.thefinestartist.realm.instagram.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout_;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +12,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.thefinestartist.realm.instagram.R;
-import com.thefinestartist.realm.instagram.models.Post;
-import com.thefinestartist.realm.instagram.networks.Api;
+import com.thefinestartist.realm.instagram.instagram.networks.Api;
+import com.thefinestartist.realm.instagram.realm.Post;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -28,8 +29,11 @@ public class ScrollViewFragment extends BaseFragment implements ViewTreeObserver
 
     Realm realm;
 
+    @Bind(R.id.scrollView)
     ScrollView scrollView;
+    @Bind(R.id.linearLayout)
     LinearLayout linearLayout;
+    @Bind(R.id.swipeRefreshLayout)
     SwipeRefreshLayout_ swipeRefreshLayout;
 
     @Nullable
@@ -38,9 +42,7 @@ public class ScrollViewFragment extends BaseFragment implements ViewTreeObserver
         realm = Realm.getInstance(new RealmConfiguration.Builder(getActivity()).name("ScrollView.realm").build());
 
         View view = inflater.inflate(R.layout.fragment_scrollview, null);
-        scrollView = (ScrollView) view.findViewById(R.id.scrollView);
-        linearLayout = (LinearLayout) view.findViewById(R.id.linearLayout);
-        swipeRefreshLayout = (SwipeRefreshLayout_) view.findViewById(R.id.swipeRefreshLayout);
+        ButterKnife.bind(this, view);
         swipeRefreshLayout.setColorSchemeResources(R.color.accent, R.color.grey);
 
         swipeRefreshLayout.setOnRefreshListener(this);

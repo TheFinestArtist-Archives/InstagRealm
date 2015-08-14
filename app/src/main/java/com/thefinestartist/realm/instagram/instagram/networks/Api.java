@@ -1,13 +1,13 @@
-package com.thefinestartist.realm.instagram.networks;
+package com.thefinestartist.realm.instagram.instagram.networks;
 
 import android.os.Handler;
 import android.os.Looper;
 
+import com.thefinestartist.realm.instagram.realm.Post;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import com.thefinestartist.realm.instagram.models.Post;
 
 /**
  * Created by TheFinestArtist on 6/29/15.

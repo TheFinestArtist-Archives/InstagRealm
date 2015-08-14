@@ -18,6 +18,10 @@ Realm case study
 * **[Retrofit](https://github.com/square/retrofit)**  
 * **[Picasso](https://github.com/square/picasso)**
 * **[EventBus](https://github.com/greenrobot/EventBus)**
+* **[Butterknife](https://github.com/JakeWharton/butterknife)**
+* **[Material Dialog](https://github.com/afollestad/material-dialogs)**
+* **[Logger](https://github.com/orhanobut/logger)**
+
 
 ## License
 ```

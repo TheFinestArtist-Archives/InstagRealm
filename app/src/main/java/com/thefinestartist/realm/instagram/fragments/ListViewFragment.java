@@ -12,11 +12,13 @@ import android.widget.ListView;
 
 import com.thefinestartist.realm.instagram.R;
 import com.thefinestartist.realm.instagram.adapters.ListViewAdapter;
-import com.thefinestartist.realm.instagram.models.Post;
-import com.thefinestartist.realm.instagram.networks.Api;
+import com.thefinestartist.realm.instagram.instagram.networks.Api;
+import com.thefinestartist.realm.instagram.realm.Post;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
@@ -29,8 +31,10 @@ public class ListViewFragment extends BaseFragment implements AbsListView.OnScro
     private static final String REALM_NAME = "ListView.realm";
     Realm realm;
 
+    @Bind(android.R.id.list)
     ListView listView;
     ListAdapter adapter;
+    @Bind(R.id.swipeRefreshLayout)
     SwipeRefreshLayout_ swipeRefreshLayout;
 
     @Nullable
@@ -39,8 +43,7 @@ public class ListViewFragment extends BaseFragment implements AbsListView.OnScro
         realm = Realm.getInstance(new RealmConfiguration.Builder(getActivity()).name(REALM_NAME).build());
 
         View view = inflater.inflate(R.layout.fragment_listview, null);
-        listView = (ListView) view.findViewById(android.R.id.list);
-        swipeRefreshLayout = (SwipeRefreshLayout_) view.findViewById(R.id.swipeRefreshLayout);
+        ButterKnife.bind(this, view);
         swipeRefreshLayout.setColorSchemeResources(R.color.accent, R.color.grey);
 
         RealmResults<Post> realmResults = realm.where(Post.class).findAll();

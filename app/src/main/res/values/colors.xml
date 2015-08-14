@@ -4,4 +4,11 @@
     <color name="grey">#E4E5E6</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+
+    <color name="insta_blue">#3f729b</color>
+
+    <integer-array name="progress_colors">
+        <item>@color/insta_blue</item>
+        <item>@color/white</item>
+    </integer-array>
 </resources>

@@ -14,11 +14,13 @@ import android.view.ViewGroup;
 
 import com.thefinestartist.realm.instagram.R;
 import com.thefinestartist.realm.instagram.adapters.RecyclerViewAdapter;
-import com.thefinestartist.realm.instagram.models.Post;
-import com.thefinestartist.realm.instagram.networks.Api;
+import com.thefinestartist.realm.instagram.instagram.networks.Api;
+import com.thefinestartist.realm.instagram.realm.Post;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmConfiguration;
@@ -34,9 +36,11 @@ public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLa
 
     int layoutRes;
 
+    @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
     RecyclerViewAdapter adapter;
     LinearLayoutManager layoutManager;
+    @Bind(R.id.swipeRefreshLayout)
     SwipeRefreshLayout_ swipeRefreshLayout;
 
     private static final int ANIMATION_DURATION = 500;
@@ -52,7 +56,8 @@ public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLa
         realm = Realm.getInstance(new RealmConfiguration.Builder(getActivity()).name(REALM_NAME).build());
 
         View view = inflater.inflate(R.layout.fragment_recyclerview, null);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        ButterKnife.bind(this, view);
+
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(recyclerView.getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -62,7 +67,6 @@ public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLa
         itemAnimator.setRemoveDuration(ANIMATION_DURATION);
         recyclerView.setItemAnimator(itemAnimator);
 
-        swipeRefreshLayout = (SwipeRefreshLayout_) view.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.accent, R.color.grey);
 
         RealmResults<Post> realmResults = realm.where(Post.class).findAll();

@@ -1,4 +1,4 @@
-package com.thefinestartist.realm.instagram;
+package com.thefinestartist.realm.instagram.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -8,10 +8,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.thefinestartist.realm.instagram.R;
 import com.thefinestartist.realm.instagram.fragments.CardViewFragment;
 import com.thefinestartist.realm.instagram.fragments.ListViewFragment;
 import com.thefinestartist.realm.instagram.fragments.RecyclerViewFragment;
 import com.thefinestartist.realm.instagram.fragments.ScrollViewFragment;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity  {
 
@@ -62,16 +66,17 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     MainFragmentAdapter adapter;
+    @Bind(R.id.tabLayout)
     TabLayout tabLayout;
+    @Bind(R.id.viewPager)
     ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityStack.clear(this);
         setContentView(R.layout.activity_main);
-
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        ButterKnife.bind(this);
 
         adapter = new MainFragmentAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);

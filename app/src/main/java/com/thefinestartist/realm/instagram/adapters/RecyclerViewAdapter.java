@@ -6,8 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.thefinestartist.realm.instagram.realm.Post;
+
 import io.realm.RealmResults;
-import com.thefinestartist.realm.instagram.models.Post;
 
 /**
  * Created by TheFinestArtist on 6/29/15.
