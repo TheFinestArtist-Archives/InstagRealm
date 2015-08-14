@@ -17,7 +17,7 @@ import com.thefinestartist.realm.instagram.fragments.ScrollViewFragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity {
 
     private static final int ITEM_COUNT = 4;
 

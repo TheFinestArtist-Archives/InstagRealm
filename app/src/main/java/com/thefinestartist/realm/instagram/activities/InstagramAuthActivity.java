@@ -16,6 +16,7 @@
 
 package com.thefinestartist.realm.instagram.activities;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout_;
@@ -27,15 +28,15 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.orhanobut.logger.Logger;
 import com.thefinestartist.realm.instagram.R;
+import com.thefinestartist.realm.instagram.instagram.Access;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class InstagramAuthActivity extends AppCompatActivity {
 
-    public static String AUTH_URL = "https://api.instagram.com/oauth/authorize/?client_id=8275787745ef444c8ad78eaa89b701f3&redirect_uri=http://thefinestartist.com&response_type=token";
+    public static final String AUTH_URL = "https://api.instagram.com/oauth/authorize/?client_id=8275787745ef444c8ad78eaa89b701f3&redirect_uri=http://thefinestartist.com&response_type=token";
 
     @Bind(R.id.webView)
     WebView webview;
@@ -81,7 +82,14 @@ public class InstagramAuthActivity extends AppCompatActivity {
 
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            Logger.e("onPageStarted: " + url);
+            if (url.contains("#access_token=")) {
+                String[] splited = url.split("#access_token=");
+                if (splited.length == 2) {
+                    Access.Token = splited[1];
+                    Intent intent = new Intent(InstagramAuthActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+            }
         }
 
         @Override
