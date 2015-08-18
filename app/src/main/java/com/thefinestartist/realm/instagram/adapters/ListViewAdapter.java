@@ -39,8 +39,8 @@ public class ListViewAdapter extends RealmBaseAdapter<Post> implements ListAdapt
         }
 
         Post post = realmResults.get(position);
-        viewHolder.title.setText(post.getTitle());
-        viewHolder.message.setText(post.getMessage());
+//        viewHolder.title.setText(post.getTitle());
+//        viewHolder.message.setText(post.getMessage());
         return convertView;
     }
 }

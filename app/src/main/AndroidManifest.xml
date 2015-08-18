@@ -12,7 +12,7 @@
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="RecyclerView Example"
+        android:label="InstagRealm"
         android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity

@@ -1,8 +1,6 @@
 package com.thefinestartist.realm.instagram.fragments;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout_;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -14,25 +12,16 @@ import android.view.ViewGroup;
 
 import com.thefinestartist.realm.instagram.R;
 import com.thefinestartist.realm.instagram.adapters.RecyclerViewAdapter;
-import com.thefinestartist.realm.instagram.instagram.networks.Api;
-import com.thefinestartist.realm.instagram.realm.Post;
-
-import java.util.List;
+import com.thefinestartist.realm.instagram.databases.RecyclerViewDatabase;
+import com.thefinestartist.realm.instagram.events.OnRecyclerViewUpdateEvent;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import io.realm.Realm;
-import io.realm.RealmChangeListener;
-import io.realm.RealmConfiguration;
-import io.realm.RealmResults;
 
 /**
  * Created by TheFinestArtist on 6/29/15.
  */
-public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLayout_.OnRefreshListener, RealmChangeListener {
-
-    String REALM_NAME;
-    Realm realm;
+public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLayout_.OnRefreshListener {
 
     int layoutRes;
 
@@ -46,15 +35,13 @@ public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLa
     private static final int ANIMATION_DURATION = 500;
 
     public RecyclerViewFragment() {
-        REALM_NAME = "RecyclerView.realm";
+        clazz = RecyclerViewDatabase.class;
         layoutRes = android.R.layout.simple_list_item_2;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        realm = Realm.getInstance(new RealmConfiguration.Builder(getActivity()).name(REALM_NAME).build());
-
         View view = inflater.inflate(R.layout.fragment_recyclerview, null);
         ButterKnife.bind(this, view);
 
@@ -69,10 +56,8 @@ public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLa
 
         swipeRefreshLayout.setColorSchemeResources(R.color.accent, R.color.grey);
 
-        RealmResults<Post> realmResults = realm.where(Post.class).findAll();
-        adapter = new RecyclerViewAdapter(realmResults, layoutRes);
+        adapter = new RecyclerViewAdapter(clazz, layoutRes);
         recyclerView.setAdapter(adapter);
-        realm.addChangeListener(this);
 
         swipeRefreshLayout.setOnRefreshListener(this);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -93,50 +78,20 @@ public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLa
     }
 
     /**
-     * RealmChangeListener
-     */
-    private int itemCount;
-
-    @Override
-    public void onChange() {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                if (itemCount < adapter.getItemCount())
-                    adapter.notifyItemRangeInserted(itemCount, adapter.getItemCount() - itemCount);
-                else
-                    adapter.notifyItemRangeRemoved(itemCount, itemCount - adapter.getItemCount());
-
-                itemCount = adapter.getItemCount();
-            }
-        });
-    }
-
-    /**
      * Check whether to load more data or not
      */
     private static final int THRESHOLD = 3;
 
     private void checkLoadMore() {
         if (!swipeRefreshLayout.isRefreshing() && adapter.getItemCount() <= layoutManager.findLastVisibleItemPosition() + THRESHOLD) {
-            loadMoreData();
+            loadData();
         }
     }
 
-    private int page;
-
-    private void loadMoreData() {
+    @Override
+    void loadData() {
         swipeRefreshLayout.setRefreshing(true);
-        Api.getFeed(page++, new Api.OnResponseListener<List<Post>>() {
-            @Override
-            public void onResponseRetrieved(List<Post> posts, Exception e) {
-                swipeRefreshLayout.setRefreshing(false);
-
-                realm.beginTransaction();
-                realm.copyToRealm(posts);
-                realm.commitTransaction();
-            }
-        });
+        super.loadData();
     }
 
     /**
@@ -144,11 +99,21 @@ public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLa
      */
     @Override
     public void onRefresh() {
-        realm.beginTransaction();
-        realm.clear(Post.class);
-        realm.commitTransaction();
+        next = null;
+        loadData();
+    }
 
-        page = 0;
-        loadMoreData();
+    /**
+     * onEvent
+     */
+    int itemCount = 0;
+
+    public void onEvent(OnRecyclerViewUpdateEvent event) {
+        if (itemCount < adapter.getItemCount())
+            adapter.notifyItemRangeInserted(itemCount, adapter.getItemCount() - itemCount);
+        else
+            adapter.notifyItemRangeRemoved(itemCount, itemCount - adapter.getItemCount());
+
+        itemCount = adapter.getItemCount();
     }
 }

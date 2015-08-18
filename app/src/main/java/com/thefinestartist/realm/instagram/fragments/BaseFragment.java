@@ -2,7 +2,8 @@ package com.thefinestartist.realm.instagram.fragments;
 
 import android.support.v4.app.Fragment;
 
-import com.thefinestartist.realm.instagram.events.OnPostUpdateEvent;
+import com.thefinestartist.realm.instagram.instagram.networks.InstagramAPI;
+import com.thefinestartist.royal.RoyalDatabase;
 
 import de.greenrobot.event.EventBus;
 
@@ -23,7 +24,10 @@ public abstract class BaseFragment extends Fragment {
         super.onStop();
     }
 
-    public void onEvent(OnPostUpdateEvent event) {
-        /* Do Something */
+    Class<? extends RoyalDatabase> clazz;
+    String next;
+
+    void loadData() {
+        InstagramAPI.getTag(getActivity(), clazz, next);
     }
 }

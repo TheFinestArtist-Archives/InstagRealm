@@ -1,5 +1,6 @@
 package com.thefinestartist.realm.instagram.fragments;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout_;
@@ -11,17 +12,17 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.thefinestartist.realm.instagram.R;
-import com.thefinestartist.realm.instagram.instagram.networks.Api;
+import com.thefinestartist.realm.instagram.databases.ScrollViewDatabase;
+import com.thefinestartist.realm.instagram.events.OnScrollViewUpdateEvent;
 import com.thefinestartist.realm.instagram.instagram.networks.InstagramAPI;
 import com.thefinestartist.realm.instagram.realm.Post;
-
-import java.util.List;
+import com.thefinestartist.royal.Royal;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
 /**
  * Created by TheFinestArtist on 6/29/15.
@@ -37,10 +38,14 @@ public class ScrollViewFragment extends BaseFragment implements ViewTreeObserver
     @Bind(R.id.swipeRefreshLayout)
     SwipeRefreshLayout_ swipeRefreshLayout;
 
+    public ScrollViewFragment() {
+        clazz = ScrollViewDatabase.class;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        realm = Realm.getInstance(new RealmConfiguration.Builder(getActivity()).name("ScrollView.realm").build());
+        realm = Royal.getRealmOf(ScrollViewDatabase.class);
 
         View view = inflater.inflate(R.layout.fragment_scrollview, null);
         ButterKnife.bind(this, view);
@@ -49,7 +54,7 @@ public class ScrollViewFragment extends BaseFragment implements ViewTreeObserver
         swipeRefreshLayout.setOnRefreshListener(this);
         scrollView.getViewTreeObserver().addOnScrollChangedListener(this);
 
-        onRefresh();
+        loadData();
         return view;
     }
 
@@ -61,27 +66,14 @@ public class ScrollViewFragment extends BaseFragment implements ViewTreeObserver
     @Override
     public void onScrollChanged() {
         if (!swipeRefreshLayout.isRefreshing() && linearLayout.getHeight() <= scrollView.getScrollY() + scrollView.getHeight() + THRESHOLD) {
-            loadMoreData();
+            loadData();
         }
     }
 
-    private int page;
-
-    private void loadMoreData() {
+    @Override
+    void loadData() {
         swipeRefreshLayout.setRefreshing(true);
-        Api.getFeed(page++, new Api.OnResponseListener<List<Post>>() {
-            @Override
-            public void onResponseRetrieved(List<Post> posts, Exception e) {
-                swipeRefreshLayout.setRefreshing(false);
-
-                realm.beginTransaction();
-                realm.copyToRealm(posts);
-                realm.commitTransaction();
-
-                for (Post post : posts)
-                    addItem(post);
-            }
-        });
+        super.loadData();
     }
 
     /**
@@ -89,31 +81,40 @@ public class ScrollViewFragment extends BaseFragment implements ViewTreeObserver
      */
     @Override
     public void onRefresh() {
-        realm.beginTransaction();
-        realm.clear(Post.class);
-        realm.commitTransaction();
+        clearViews();
 
-        clearItems();
+        next = null;
+        loadData();
 
-        page = 0;
-        loadMoreData();
+        InstagramAPI.getTag(getActivity(), ScrollViewDatabase.class, null);
+    }
 
-        InstagramAPI.getTag(null);
+    public void onEvent(OnScrollViewUpdateEvent event) {
+        swipeRefreshLayout.setRefreshing(false);
+        next = event.getNext();
+        for (Post post : event.getPosts())
+            addItem(post);
     }
 
     /**
      * LinearLayout
      */
-    private void clearItems() {
+    private void clearViews() {
         linearLayout.removeAllViews();
     }
 
     private void addItem(Post post) {
-        View view = LayoutInflater.from(getActivity()).inflate(android.R.layout.simple_list_item_2, null);
-        TextView title = (TextView) view.findViewById(android.R.id.text1);
-        TextView message = (TextView) view.findViewById(android.R.id.text2);
-        title.setText(post.getTitle());
-        message.setText(post.getMessage());
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.item_post, null);
+        SimpleDraweeView profile = (SimpleDraweeView) view.findViewById(R.id.profile);
+        TextView username = (TextView) view.findViewById(R.id.username);
+        SimpleDraweeView photo = (SimpleDraweeView) view.findViewById(R.id.photo);
+        TextView message = (TextView) view.findViewById(R.id.message);
+
+        profile.setImageURI(Uri.parse(post.getUser().getProfile_picture()));
+        username.setText(post.getUser().getUsername());
+        photo.setImageURI(Uri.parse(post.getImages().getStandard_resolution().getUrl()));
+        message.setText(post.getCaption().getText().trim());
+
         linearLayout.addView(view);
     }
 }

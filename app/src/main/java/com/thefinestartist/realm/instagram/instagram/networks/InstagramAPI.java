@@ -1,12 +1,26 @@
 package com.thefinestartist.realm.instagram.instagram.networks;
 
+import android.app.Activity;
+
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.orhanobut.logger.Logger;
+import com.thefinestartist.realm.instagram.databases.CardViewDatabase;
+import com.thefinestartist.realm.instagram.databases.ListViewDatabase;
+import com.thefinestartist.realm.instagram.databases.RecyclerViewDatabase;
+import com.thefinestartist.realm.instagram.databases.ScrollViewDatabase;
+import com.thefinestartist.realm.instagram.events.OnCardViewUpdateEvent;
+import com.thefinestartist.realm.instagram.events.OnListViewUpdateEvent;
+import com.thefinestartist.realm.instagram.events.OnRecyclerViewUpdateEvent;
+import com.thefinestartist.realm.instagram.events.OnScrollViewUpdateEvent;
 import com.thefinestartist.realm.instagram.instagram.callbacks.TagsCallback;
+import com.thefinestartist.realm.instagram.widgets.SnackBar;
+import com.thefinestartist.royal.RoyalDatabase;
+import com.thefinestartist.royal.RoyalTransaction;
 
+import de.greenrobot.event.EventBus;
 import io.realm.RealmObject;
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
@@ -49,7 +63,10 @@ public class InstagramAPI {
             .setLog(new RestAdapter.Log() {
                 @Override
                 public void log(String log) {
-                    Logger.d(log);
+                    if (log.startsWith("{"))
+                        Logger.json(log);
+                    else
+                        Logger.d(log);
                 }
             })
             .setLogLevel(RestAdapter.LogLevel.FULL)
@@ -60,15 +77,24 @@ public class InstagramAPI {
 
     private static InstagramService instagramService = restAdapter.create(InstagramService.class);
 
-    public static void getTag(String next) {
+    public static void getTag(final Activity activity, final Class<? extends RoyalDatabase> clazz, String next) {
         instagramService.getTags("Instagram", accessToken, next, new Callback<TagsCallback>() {
             @Override
             public void success(TagsCallback tagsCallback, Response response) {
-                Logger.e("getTag: success");
+                RoyalTransaction.save(clazz, tagsCallback.data);
+                if (ScrollViewDatabase.class.equals(clazz))
+                    EventBus.getDefault().post(new OnScrollViewUpdateEvent(tagsCallback.pagination.next_max_tag_id, tagsCallback.data));
+                if (ListViewDatabase.class.equals(clazz))
+                    EventBus.getDefault().post(new OnListViewUpdateEvent(tagsCallback.pagination.next_max_tag_id));
+                if (RecyclerViewDatabase.class.equals(clazz))
+                    EventBus.getDefault().post(new OnRecyclerViewUpdateEvent(tagsCallback.pagination.next_max_tag_id));
+                if (CardViewDatabase.class.equals(clazz))
+                    EventBus.getDefault().post(new OnCardViewUpdateEvent(tagsCallback.pagination.next_max_tag_id));
             }
 
             @Override
             public void failure(RetrofitError error) {
+                SnackBar.alert(activity, "Please check your network status!");
             }
         });
     }

@@ -12,15 +12,14 @@ import android.widget.ListView;
 
 import com.thefinestartist.realm.instagram.R;
 import com.thefinestartist.realm.instagram.adapters.ListViewAdapter;
-import com.thefinestartist.realm.instagram.instagram.networks.Api;
+import com.thefinestartist.realm.instagram.databases.ListViewDatabase;
+import com.thefinestartist.realm.instagram.events.OnListViewUpdateEvent;
 import com.thefinestartist.realm.instagram.realm.Post;
-
-import java.util.List;
+import com.thefinestartist.royal.Royal;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
 /**
@@ -28,7 +27,6 @@ import io.realm.RealmResults;
  */
 public class ListViewFragment extends BaseFragment implements AbsListView.OnScrollListener, SwipeRefreshLayout_.OnRefreshListener {
 
-    private static final String REALM_NAME = "ListView.realm";
     Realm realm;
 
     @Bind(android.R.id.list)
@@ -37,10 +35,14 @@ public class ListViewFragment extends BaseFragment implements AbsListView.OnScro
     @Bind(R.id.swipeRefreshLayout)
     SwipeRefreshLayout_ swipeRefreshLayout;
 
+    public ListViewFragment() {
+        clazz = ListViewDatabase.class;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        realm = Realm.getInstance(new RealmConfiguration.Builder(getActivity()).name(REALM_NAME).build());
+        realm = Royal.getRealmOf(ListViewDatabase.class);
 
         View view = inflater.inflate(R.layout.fragment_listview, null);
         ButterKnife.bind(this, view);
@@ -69,24 +71,15 @@ public class ListViewFragment extends BaseFragment implements AbsListView.OnScro
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         if (!swipeRefreshLayout.isRefreshing() && (totalItemCount - visibleItemCount) <= (firstVisibleItem + THRESHOLD)) {
-            loadMoreData();
+            loadData();
         }
     }
 
-    private int page;
 
-    private void loadMoreData() {
+    @Override
+    void loadData() {
         swipeRefreshLayout.setRefreshing(true);
-        Api.getFeed(page++, new Api.OnResponseListener<List<Post>>() {
-            @Override
-            public void onResponseRetrieved(List<Post> posts, Exception e) {
-                swipeRefreshLayout.setRefreshing(false);
-
-                realm.beginTransaction();
-                realm.copyToRealm(posts);
-                realm.commitTransaction();
-            }
-        });
+        super.loadData();
     }
 
     /**
@@ -94,11 +87,11 @@ public class ListViewFragment extends BaseFragment implements AbsListView.OnScro
      */
     @Override
     public void onRefresh() {
-        realm.beginTransaction();
-        realm.clear(Post.class);
-        realm.commitTransaction();
+        next = null;
+        loadData();
+    }
 
-        page = 0;
-        loadMoreData();
+    public void onEvent(OnListViewUpdateEvent event) {
+
     }
 }

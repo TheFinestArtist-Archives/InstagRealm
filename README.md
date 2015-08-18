@@ -13,10 +13,11 @@ Realm case study
 
 ## Including Libraries
 * **[Realm](https://github.com/realm/realm-java)**  
+* **[Royal](https://github.com/TheFinestArtist/Royal-Android)**
 * **RecyclerView**
 * **CardView**
 * **[Retrofit](https://github.com/square/retrofit)**  
-* **[Picasso](https://github.com/square/picasso)**
+* **[Fresco](https://github.com/facebook/fresco)**
 * **[EventBus](https://github.com/greenrobot/EventBus)**
 * **[Butterknife](https://github.com/JakeWharton/butterknife)**
 * **[Material Dialog](https://github.com/afollestad/material-dialogs)**

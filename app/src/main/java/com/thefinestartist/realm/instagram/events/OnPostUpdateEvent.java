@@ -1,12 +1,17 @@
 package com.thefinestartist.realm.instagram.events;
 
 /**
- * Created by TheFinestArtist on 8/14/15.
+ * Created by TheFinestArtist on 8/18/15.
  */
-public class OnPostUpdateEvent {
-    String databaseName;
+public abstract class OnPostUpdateEvent {
 
-    public OnPostUpdateEvent(String databaseName) {
-        this.databaseName = databaseName;
+    private String next;
+
+    public OnPostUpdateEvent(String next) {
+        this.next = next;
+    }
+
+    public String getNext() {
+        return next;
     }
 }

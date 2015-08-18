@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.thefinestartist.realm.instagram.realm.Post;
+import com.thefinestartist.royal.Royal;
+import com.thefinestartist.royal.RoyalDatabase;
 
 import io.realm.RealmResults;
 
@@ -18,8 +20,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     RealmResults<Post> realmResults;
     int layoutRes;
 
-    public RecyclerViewAdapter(RealmResults<Post> realmResults, int layoutRes) {
-        this.realmResults = realmResults;
+    public RecyclerViewAdapter(Class<? extends RoyalDatabase> clazz, int layoutRes) {
+        this.realmResults = Royal.getRealmOf(clazz).where(Post.class).findAll();
         this.layoutRes = layoutRes;
     }
 
@@ -39,8 +41,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(SimpleViewHolder holder, int position) {
         Post post = realmResults.get(position);
-        holder.setTitle(post.getTitle());
-        holder.setMessage(post.getMessage());
+//        holder.setTitle(post.getTitle());
+//        holder.setMessage(post.getMessage());
     }
 
     static class SimpleViewHolder extends RecyclerView.ViewHolder {

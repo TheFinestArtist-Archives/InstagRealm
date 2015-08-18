@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/profile"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/round_grey"
+        fresco:actualImageScaleType="focusCrop"
+        fresco:roundAsCircle="true" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignTop="@id/profile"
+        android:layout_marginRight="7dp"
+        android:layout_toRightOf="@id/profile"
+        android:gravity="center_vertical"
+        android:text="TheFinestArtist"
+        android:textColor="@color/insta_blue"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile"
+        android:layout_marginTop="7dp"
+        android:background="@color/grey"
+        fresco:actualImageScaleType="focusCrop"
+        fresco:viewAspectRatio="1" />
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/photo"
+        android:layout_marginBottom="14dp"
+        android:padding="7dp"
+        android:text="Hello\nDownloading..."
+        android:textColor="@color/black"
+        android:textSize="14dp" />
+
+</RelativeLayout>

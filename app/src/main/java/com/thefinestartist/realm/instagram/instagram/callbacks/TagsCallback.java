@@ -1,6 +1,6 @@
 package com.thefinestartist.realm.instagram.instagram.callbacks;
 
-import com.thefinestartist.realm.instagram.realm.Data;
+import com.thefinestartist.realm.instagram.realm.Post;
 
 /**
  * Created by TheFinestArtist on 8/14/15.
@@ -8,7 +8,7 @@ import com.thefinestartist.realm.instagram.realm.Data;
 public class TagsCallback {
 
     public Pagination pagination;
-    public Data[] data;
+    public Post[] data;
 
     public class Pagination {
         public String next_max_tag_id;
