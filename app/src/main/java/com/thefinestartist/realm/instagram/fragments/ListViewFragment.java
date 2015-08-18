@@ -88,10 +88,15 @@ public class ListViewFragment extends BaseFragment implements AbsListView.OnScro
     @Override
     public void onRefresh() {
         next = null;
+        Realm realm = Royal.getRealmOf(clazz);
+        realm.beginTransaction();
+        realm.clear(Post.class);
+        realm.commitTransaction();
         loadData();
     }
 
     public void onEvent(OnListViewUpdateEvent event) {
-
+        swipeRefreshLayout.setRefreshing(false);
+        next = event.getNext();
     }
 }

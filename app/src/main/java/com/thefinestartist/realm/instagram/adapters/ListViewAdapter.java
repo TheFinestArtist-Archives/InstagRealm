@@ -1,13 +1,18 @@
 package com.thefinestartist.realm.instagram.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.thefinestartist.realm.instagram.R;
 import com.thefinestartist.realm.instagram.realm.Post;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import io.realm.RealmBaseAdapter;
 import io.realm.RealmResults;
 
@@ -20,27 +25,41 @@ public class ListViewAdapter extends RealmBaseAdapter<Post> implements ListAdapt
         super(context, realmResults, true);
     }
 
-    private static class ViewHolder {
-        TextView title;
+    static class ViewHolder {
+        @Bind(R.id.profile)
+        SimpleDraweeView profile;
+        @Bind(R.id.username)
+        TextView username;
+        @Bind(R.id.photo)
+        SimpleDraweeView photo;
+        @Bind(R.id.message)
         TextView message;
+
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
+
+        public void setPost(Post post) {
+            profile.setImageURI(Uri.parse(post.getUser().getProfile_picture()));
+            username.setText(post.getUser().getUsername());
+            photo.setImageURI(Uri.parse(post.getImages().getStandard_resolution().getUrl()));
+            message.setText(post.getCaption().getText().trim());
+        }
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = inflater.inflate(android.R.layout.simple_list_item_2, parent, false);
-            viewHolder = new ViewHolder();
-            viewHolder.title = (TextView) convertView.findViewById(android.R.id.text1);
-            viewHolder.message = (TextView) convertView.findViewById(android.R.id.text2);
+            convertView = inflater.inflate(R.layout.item_post, parent, false);
+            viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
         Post post = realmResults.get(position);
-//        viewHolder.title.setText(post.getTitle());
-//        viewHolder.message.setText(post.getMessage());
+        viewHolder.setPost(post);
         return convertView;
     }
 }
