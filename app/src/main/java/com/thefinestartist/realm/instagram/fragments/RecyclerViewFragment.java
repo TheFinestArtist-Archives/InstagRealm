@@ -26,8 +26,6 @@ import jp.wasabeef.recyclerview.animators.FadeInAnimator;
  */
 public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLayout_.OnRefreshListener {
 
-    int layoutRes;
-
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
     RecyclerViewAdapter adapter;
@@ -39,7 +37,6 @@ public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLa
 
     public RecyclerViewFragment() {
         clazz = RecyclerViewDatabase.class;
-        layoutRes = R.layout.item_post;
     }
 
     @Nullable
@@ -61,7 +58,7 @@ public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLa
 
         swipeRefreshLayout.setColorSchemeResources(R.color.accent);
 
-        adapter = new RecyclerViewAdapter(clazz, layoutRes);
+        adapter = new RecyclerViewAdapter(clazz, R.layout.item_post);
         recyclerView.setAdapter(adapter);
 
         swipeRefreshLayout.setOnRefreshListener(this);
