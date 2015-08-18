@@ -84,6 +84,12 @@ public class ScrollViewFragment extends BaseFragment implements ViewTreeObserver
         clearViews();
 
         next = null;
+
+        Realm realm = Royal.getRealmOf(clazz);
+        realm.beginTransaction();
+        realm.clear(Post.class);
+        realm.commitTransaction();
+
         loadData();
 
         InstagramAPI.getTag(getActivity(), ScrollViewDatabase.class, null);

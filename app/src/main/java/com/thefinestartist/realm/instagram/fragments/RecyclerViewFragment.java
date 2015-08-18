@@ -3,7 +3,6 @@ package com.thefinestartist.realm.instagram.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout_;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,9 +13,13 @@ import com.thefinestartist.realm.instagram.R;
 import com.thefinestartist.realm.instagram.adapters.RecyclerViewAdapter;
 import com.thefinestartist.realm.instagram.databases.RecyclerViewDatabase;
 import com.thefinestartist.realm.instagram.events.OnRecyclerViewUpdateEvent;
+import com.thefinestartist.realm.instagram.realm.Post;
+import com.thefinestartist.royal.Royal;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
 /**
  * Created by TheFinestArtist on 6/29/15.
@@ -36,7 +39,7 @@ public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLa
 
     public RecyclerViewFragment() {
         clazz = RecyclerViewDatabase.class;
-        layoutRes = android.R.layout.simple_list_item_2;
+        layoutRes = R.layout.item_post;
     }
 
     @Nullable
@@ -49,9 +52,11 @@ public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLa
         layoutManager = new LinearLayoutManager(recyclerView.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
+        RecyclerView.ItemAnimator itemAnimator = new FadeInAnimator();
         itemAnimator.setAddDuration(ANIMATION_DURATION);
         itemAnimator.setRemoveDuration(ANIMATION_DURATION);
+        itemAnimator.setMoveDuration(ANIMATION_DURATION);
+        itemAnimator.setChangeDuration(ANIMATION_DURATION);
         recyclerView.setItemAnimator(itemAnimator);
 
         swipeRefreshLayout.setColorSchemeResources(R.color.accent, R.color.grey);
@@ -100,6 +105,15 @@ public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLa
     @Override
     public void onRefresh() {
         next = null;
+
+        Realm realm = Royal.getRealmOf(clazz);
+        realm.beginTransaction();
+        realm.clear(Post.class);
+        realm.commitTransaction();
+
+        adapter.notifyItemRangeRemoved(0, itemCount);
+        itemCount = 0;
+
         loadData();
     }
 
@@ -109,6 +123,9 @@ public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLa
     int itemCount = 0;
 
     public void onEvent(OnRecyclerViewUpdateEvent event) {
+        swipeRefreshLayout.setRefreshing(false);
+        next = event.getNext();
+
         if (itemCount < adapter.getItemCount())
             adapter.notifyItemRangeInserted(itemCount, adapter.getItemCount() - itemCount);
         else

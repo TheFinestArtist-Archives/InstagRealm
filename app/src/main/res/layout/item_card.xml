@@ -11,6 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <include layout="@android:layout/simple_list_item_2" />
+        <include layout="@layout/item_post" />
     </android.support.v7.widget.CardView>
 </RelativeLayout>

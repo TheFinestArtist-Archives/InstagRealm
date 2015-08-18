@@ -36,4 +36,5 @@ dependencies {
     compile 'com.facebook.fresco:fresco:0.6.1'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.orhanobut:logger:1.11'
+    compile 'jp.wasabeef:recyclerview-animators:1.2.1'
 }

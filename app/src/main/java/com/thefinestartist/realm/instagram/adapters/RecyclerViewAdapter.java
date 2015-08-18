@@ -1,21 +1,26 @@
 package com.thefinestartist.realm.instagram.adapters;
 
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.thefinestartist.realm.instagram.R;
 import com.thefinestartist.realm.instagram.realm.Post;
 import com.thefinestartist.royal.Royal;
 import com.thefinestartist.royal.RoyalDatabase;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import io.realm.RealmResults;
 
 /**
  * Created by TheFinestArtist on 6/29/15.
  */
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.SimpleViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     RealmResults<Post> realmResults;
     int layoutRes;
@@ -31,37 +36,40 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.
                 from(parent.getContext()).
                 inflate(layoutRes, parent, false);
-        return new SimpleViewHolder(itemView);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(SimpleViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         Post post = realmResults.get(position);
-//        holder.setTitle(post.getTitle());
-//        holder.setMessage(post.getMessage());
+        holder.setPost(post);
     }
 
-    static class SimpleViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView title;
+        @Bind(R.id.profile)
+        SimpleDraweeView profile;
+        @Bind(R.id.username)
+        TextView username;
+        @Bind(R.id.photo)
+        SimpleDraweeView photo;
+        @Bind(R.id.message)
         TextView message;
 
-        public SimpleViewHolder(View itemView) {
-            super(itemView);
-            title = (TextView) itemView.findViewById(android.R.id.text1);
-            message = (TextView) itemView.findViewById(android.R.id.text2);
+        public ViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
         }
 
-        public void setTitle(String text) {
-            title.setText(text);
-        }
-
-        public void setMessage(String text) {
-            message.setText(text);
+        public void setPost(Post post) {
+            profile.setImageURI(Uri.parse(post.getUser().getProfile_picture()));
+            username.setText(post.getUser().getUsername());
+            photo.setImageURI(Uri.parse(post.getImages().getStandard_resolution().getUrl()));
+            message.setText(post.getCaption().getText().trim());
         }
     }
 }
