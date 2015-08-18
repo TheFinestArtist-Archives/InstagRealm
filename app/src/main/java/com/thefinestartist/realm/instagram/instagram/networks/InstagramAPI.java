@@ -78,7 +78,7 @@ public class InstagramAPI {
     private static InstagramService instagramService = restAdapter.create(InstagramService.class);
 
     public static void getTag(final Activity activity, final Class<? extends RoyalDatabase> clazz, String next) {
-        instagramService.getTags("Instagram", accessToken, next, new Callback<TagsCallback>() {
+        instagramService.getTags("art", accessToken, next, new Callback<TagsCallback>() {
             @Override
             public void success(TagsCallback tagsCallback, Response response) {
                 RoyalTransaction.save(clazz, tagsCallback.data);
