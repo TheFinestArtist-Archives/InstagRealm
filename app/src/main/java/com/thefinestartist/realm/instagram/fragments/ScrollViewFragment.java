@@ -49,7 +49,7 @@ public class ScrollViewFragment extends BaseFragment implements ViewTreeObserver
 
         View view = inflater.inflate(R.layout.fragment_scrollview, null);
         ButterKnife.bind(this, view);
-        swipeRefreshLayout.setColorSchemeResources(R.color.accent, R.color.grey);
+        swipeRefreshLayout.setColorSchemeResources(R.color.accent);
 
         swipeRefreshLayout.setOnRefreshListener(this);
         scrollView.getViewTreeObserver().addOnScrollChangedListener(this);

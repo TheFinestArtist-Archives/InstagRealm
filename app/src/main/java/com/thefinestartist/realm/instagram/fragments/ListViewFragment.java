@@ -46,7 +46,7 @@ public class ListViewFragment extends BaseFragment implements AbsListView.OnScro
 
         View view = inflater.inflate(R.layout.fragment_listview, null);
         ButterKnife.bind(this, view);
-        swipeRefreshLayout.setColorSchemeResources(R.color.accent, R.color.grey);
+        swipeRefreshLayout.setColorSchemeResources(R.color.accent);
 
         RealmResults<Post> realmResults = realm.where(Post.class).findAll();
         adapter = new ListViewAdapter(getActivity(), realmResults);

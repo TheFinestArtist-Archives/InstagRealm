@@ -59,7 +59,7 @@ public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLa
         itemAnimator.setChangeDuration(ANIMATION_DURATION);
         recyclerView.setItemAnimator(itemAnimator);
 
-        swipeRefreshLayout.setColorSchemeResources(R.color.accent, R.color.grey);
+        swipeRefreshLayout.setColorSchemeResources(R.color.accent);
 
         adapter = new RecyclerViewAdapter(clazz, layoutRes);
         recyclerView.setAdapter(adapter);
