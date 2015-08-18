@@ -95,6 +95,14 @@ public class InstagramAPI {
             @Override
             public void failure(RetrofitError error) {
                 SnackBar.alert(activity, "Please check your network status!");
+                if (ScrollViewDatabase.class.equals(clazz))
+                    EventBus.getDefault().post(new OnScrollViewUpdateEvent());
+                if (ListViewDatabase.class.equals(clazz))
+                    EventBus.getDefault().post(new OnListViewUpdateEvent());
+                if (RecyclerViewDatabase.class.equals(clazz))
+                    EventBus.getDefault().post(new OnRecyclerViewUpdateEvent());
+                if (CardViewDatabase.class.equals(clazz))
+                    EventBus.getDefault().post(new OnCardViewUpdateEvent());
             }
         });
     }

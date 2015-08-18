@@ -5,6 +5,10 @@ package com.thefinestartist.realm.instagram.events;
  */
 public class OnRecyclerViewUpdateEvent extends OnPostUpdateEvent {
 
+    public OnRecyclerViewUpdateEvent() {
+        super();
+    }
+
     public OnRecyclerViewUpdateEvent(String next) {
         super(next);
     }

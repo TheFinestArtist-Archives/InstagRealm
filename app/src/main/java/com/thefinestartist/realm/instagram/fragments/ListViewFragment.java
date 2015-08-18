@@ -97,6 +97,9 @@ public class ListViewFragment extends BaseFragment implements AbsListView.OnScro
 
     public void onEvent(OnListViewUpdateEvent event) {
         swipeRefreshLayout.setRefreshing(false);
+        if (event.isFailed())
+            return;
+
         next = event.getNext();
     }
 }

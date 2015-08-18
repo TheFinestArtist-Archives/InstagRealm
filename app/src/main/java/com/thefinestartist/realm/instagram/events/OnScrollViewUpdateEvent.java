@@ -9,6 +9,10 @@ public class OnScrollViewUpdateEvent extends OnPostUpdateEvent {
 
     Post[] posts;
 
+    public OnScrollViewUpdateEvent() {
+        super();
+    }
+
     public OnScrollViewUpdateEvent(String next, Post[] posts) {
         super(next);
         this.posts = posts;

@@ -97,6 +97,9 @@ public class ScrollViewFragment extends BaseFragment implements ViewTreeObserver
 
     public void onEvent(OnScrollViewUpdateEvent event) {
         swipeRefreshLayout.setRefreshing(false);
+        if (event.isFailed())
+            return;
+
         next = event.getNext();
         for (Post post : event.getPosts())
             addItem(post);

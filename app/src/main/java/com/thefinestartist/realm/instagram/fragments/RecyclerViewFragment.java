@@ -124,6 +124,9 @@ public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLa
 
     public void onEvent(OnRecyclerViewUpdateEvent event) {
         swipeRefreshLayout.setRefreshing(false);
+        if (event.isFailed())
+            return;
+
         next = event.getNext();
 
         if (itemCount < adapter.getItemCount())

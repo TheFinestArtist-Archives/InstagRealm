@@ -5,6 +5,10 @@ package com.thefinestartist.realm.instagram.events;
  */
 public class OnCardViewUpdateEvent extends OnPostUpdateEvent {
 
+    public OnCardViewUpdateEvent() {
+        super();
+    }
+
     public OnCardViewUpdateEvent(String next) {
         super(next);
     }
