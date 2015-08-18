@@ -7,9 +7,11 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.orhanobut.logger.Logger;
+import com.thefinestartist.realm.instagram.databases.CardViewDatabase;
 import com.thefinestartist.realm.instagram.databases.ListViewDatabase;
 import com.thefinestartist.realm.instagram.databases.RecyclerViewDatabase;
 import com.thefinestartist.realm.instagram.databases.ScrollViewDatabase;
+import com.thefinestartist.realm.instagram.events.OnCardViewUpdateEvent;
 import com.thefinestartist.realm.instagram.events.OnListViewUpdateEvent;
 import com.thefinestartist.realm.instagram.events.OnRecyclerViewUpdateEvent;
 import com.thefinestartist.realm.instagram.events.OnScrollViewUpdateEvent;
@@ -86,6 +88,8 @@ public class InstagramAPI {
                     EventBus.getDefault().post(new OnListViewUpdateEvent(tagsCallback.pagination.next_max_tag_id));
                 if (RecyclerViewDatabase.class.equals(clazz))
                     EventBus.getDefault().post(new OnRecyclerViewUpdateEvent(tagsCallback.pagination.next_max_tag_id));
+                if (CardViewDatabase.class.equals(clazz))
+                    EventBus.getDefault().post(new OnCardViewUpdateEvent(tagsCallback.pagination.next_max_tag_id));
             }
 
             @Override
@@ -97,6 +101,8 @@ public class InstagramAPI {
                     EventBus.getDefault().post(new OnListViewUpdateEvent());
                 if (RecyclerViewDatabase.class.equals(clazz))
                     EventBus.getDefault().post(new OnRecyclerViewUpdateEvent());
+                if (CardViewDatabase.class.equals(clazz))
+                    EventBus.getDefault().post(new OnCardViewUpdateEvent());
             }
         });
     }
