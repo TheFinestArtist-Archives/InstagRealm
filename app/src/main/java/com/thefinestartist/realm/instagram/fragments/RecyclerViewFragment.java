@@ -35,7 +35,7 @@ public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLa
     @Bind(R.id.swipeRefreshLayout)
     SwipeRefreshLayout_ swipeRefreshLayout;
 
-    private static final int ANIMATION_DURATION = 500;
+    private static final int ANIMATION_DURATION = 300;
 
     public RecyclerViewFragment() {
         clazz = RecyclerViewDatabase.class;
