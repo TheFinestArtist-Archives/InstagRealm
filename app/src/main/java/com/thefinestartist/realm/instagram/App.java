@@ -5,6 +5,7 @@ import android.app.Application;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
+import com.thefinestartist.realm.instagram.databases.CardViewDatabase;
 import com.thefinestartist.realm.instagram.databases.ListViewDatabase;
 import com.thefinestartist.realm.instagram.databases.RecyclerViewDatabase;
 import com.thefinestartist.realm.instagram.databases.ScrollViewDatabase;
@@ -23,6 +24,7 @@ public class App extends Application {
         Royal.addDatabase(new ScrollViewDatabase());
         Royal.addDatabase(new ListViewDatabase());
         Royal.addDatabase(new RecyclerViewDatabase());
+        Royal.addDatabase(new CardViewDatabase());
 
         Fresco.initialize(this);
 

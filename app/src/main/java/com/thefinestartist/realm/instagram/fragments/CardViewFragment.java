@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 
 import com.thefinestartist.realm.instagram.R;
 import com.thefinestartist.realm.instagram.adapters.RecyclerViewAdapter;
-import com.thefinestartist.realm.instagram.databases.RecyclerViewDatabase;
-import com.thefinestartist.realm.instagram.events.OnRecyclerViewUpdateEvent;
+import com.thefinestartist.realm.instagram.databases.CardViewDatabase;
+import com.thefinestartist.realm.instagram.events.OnCardViewUpdateEvent;
 import com.thefinestartist.realm.instagram.realm.Post;
 import com.thefinestartist.royal.Royal;
 
@@ -22,9 +22,9 @@ import io.realm.Realm;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
 /**
- * Created by TheFinestArtist on 6/29/15.
+ * Created by TheFinestArtist on 6/30/15.
  */
-public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLayout_.OnRefreshListener {
+public class CardViewFragment extends BaseFragment implements SwipeRefreshLayout_.OnRefreshListener {
 
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -35,8 +35,8 @@ public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLa
 
     private static final int ANIMATION_DURATION = 300;
 
-    public RecyclerViewFragment() {
-        clazz = RecyclerViewDatabase.class;
+    public CardViewFragment() {
+        clazz = CardViewDatabase.class;
     }
 
     @Nullable
@@ -58,7 +58,7 @@ public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLa
 
         swipeRefreshLayout.setColorSchemeResources(R.color.accent);
 
-        adapter = new RecyclerViewAdapter(clazz, R.layout.item_post);
+        adapter = new RecyclerViewAdapter(clazz, R.layout.item_card);
         recyclerView.setAdapter(adapter);
 
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -119,7 +119,7 @@ public class RecyclerViewFragment extends BaseFragment implements SwipeRefreshLa
      */
     int itemCount = 0;
 
-    public void onEvent(OnRecyclerViewUpdateEvent event) {
+    public void onEvent(OnCardViewUpdateEvent event) {
         swipeRefreshLayout.setRefreshing(false);
         if (event.isFailed())
             return;

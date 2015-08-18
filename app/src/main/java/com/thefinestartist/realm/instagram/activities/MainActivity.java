@@ -9,16 +9,18 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.thefinestartist.realm.instagram.R;
+import com.thefinestartist.realm.instagram.fragments.CardViewFragment;
 import com.thefinestartist.realm.instagram.fragments.ListViewFragment;
 import com.thefinestartist.realm.instagram.fragments.RecyclerViewFragment;
 import com.thefinestartist.realm.instagram.fragments.ScrollViewFragment;
+import com.thefinestartist.realm.instagram.instagram.networks.InstagramAPI;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int ITEM_COUNT = 3;
+    private static final int ITEM_COUNT = 4;
 
     /**
      * Fragment Adapter
@@ -41,8 +43,10 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     return new ListViewFragment();
                 case 2:
-                default:
                     return new RecyclerViewFragment();
+                case 3:
+                default:
+                    return new CardViewFragment();
             }
         }
 
@@ -54,8 +58,10 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     return "ListView";
                 case 2:
-                default:
                     return "RecyclerView";
+                case 3:
+                default:
+                    return "CardView";
             }
         }
     }
