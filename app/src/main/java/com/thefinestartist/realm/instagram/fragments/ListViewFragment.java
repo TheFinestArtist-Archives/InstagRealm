@@ -75,7 +75,6 @@ public class ListViewFragment extends BaseFragment implements AbsListView.OnScro
         }
     }
 
-
     @Override
     void loadData() {
         swipeRefreshLayout.setRefreshing(true);
