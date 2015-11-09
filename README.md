@@ -1,4 +1,9 @@
 # InstagRealm
+
+InstagRealm is a sample Android application, which shows you how to integrate some of the most popular Android libraries together such as Realm, Royal, RecyclerView, CardView, Retrofit, Fresco, EventBus, Butterknife, Material Dialog and Logger.
+
+<img src="https://github.com/TheFinestArtist/InstagRealm/blob/master/art/instagrealm_a.png" width="400">
+
 Realm case study
 * Instagram tag API
 * Views
