@@ -70,6 +70,9 @@ public class InstagramAuthActivity extends AppCompatActivity {
 
         @Override
         public void onProgressChanged(WebView view, int progress) {
+            if (swipeRefreshLayout == null)
+                return;
+
             if (progress < 100)
                 swipeRefreshLayout.setRefreshing(true);
 
@@ -111,5 +114,6 @@ public class InstagramAuthActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+        webview.destroy();
     }
 }
